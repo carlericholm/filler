@@ -6,137 +6,42 @@
 /*   By: cholm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 09:44:21 by cholm             #+#    #+#             */
-/*   Updated: 2018/05/28 19:31:25 by cholm            ###   ########.fr       */
+/*   Updated: 2018/06/06 21:32:32 by cholm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-t_parsing		*ft_struct_init(void)
-{
-	t_parsing		*elem;
-
-	elem = (t_parsing *)malloc(sizeof(t_parsing));
-	elem->i = 0;
-	elem->j = 0;
-	elem->player = 0;
-	elem->X = 0;
-	elem->Y = 0;
-	elem->pX = -1;
-	elem->pY = 0;
-	elem->plateau = NULL;
-	elem->piece = NULL;
-	elem->player_ox = 0;
-	elem->player_xo = 0;
-	return (elem);
-}
-
-
-t_find			*ft_find_struct_init(void)
-{
-	t_find		*find;
-
-	find = (t_find *)malloc(sizeof(t_find));
-	find->x = 0;
-	find->y = 0;
-	find->coordx = 0;
-	find->coordy = 0;
-	find->distance = 200;
-	return (find);
-}
-
-void		ft_get_size_xy(t_parsing *elem, char *line)
-{
-	int i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (ft_isdigit(line[i]))
-		{
-			if (line[1] == 'l')
-				elem->X = ft_atoi(&line[i]);
-			if (line[1] == 'i')
-				elem->pX = ft_atoi(&line[i]);
-			while (ft_isdigit(line[i]))
-				i++;
-			if (line[i] == ' ' && ft_isdigit(line[i + 1]))
-			{
-				if (line[1] == 'l')
-					elem->Y = ft_atoi(&line[i + 1]);
-				if (line[1] == 'i')
-					elem->pY = ft_atoi(&line[i]);
-				break ;
-			}
-		}
-		i++;
-	}
-}
-
-void		ft_parsing(t_parsing *elem, char *line)
-{
-	int fdtty4;
-	int i;
-
-	i = 0;
-	fdtty4 = open("/dev/ttys004", O_WRONLY);
-	if (line[0] == '$')
-	{
-		elem->player = ft_atoi(&line[10]);
-		if (elem->player == 1)
-		{
-			elem->player_ox = 'O';
-			elem->player_xo = 'X';
-		}
-		if (elem->player == 2)
-		{
-			elem->player_ox = 'X';
-			elem->player_xo = 'O';
-		}
-	}
-	if (line[0] == 'P' && line[1] == 'l')
-		ft_get_size_xy(elem, line);
-	if (line[0] == 'P' && line[1] == 'i')
-		ft_get_size_xy(elem, line);
-	//dprintf(fdtty4, "Map X: %d\n Map y: %d\n Piece X: %d\n Piece Y: %d\n",
-//			elem->X, elem->Y, elem->pX, elem->pY);
-}
-
-int		ft_malloc_plateau(t_parsing *elem, char *line)
+int			ft_malloc_plateau(t_parsing *elem)
 {
 	int i;
 	int j;
-	int fdtty4;
 
 	i = 0;
 	j = 0;
-	fdtty4 = open("/dev/ttys004", O_WRONLY);
-	if (elem->plateau == NULL && elem->X > 0 && elem->Y > 0)
+	if (elem->plateau == NULL && elem->x > 0 && elem->y > 0)
 	{
-		if (!(elem->plateau = (char **)malloc(sizeof(char *) * (elem->X + 1))))
+		if (!(elem->plateau = (char **)malloc(sizeof(char *) * (elem->x + 1))))
 			return (0);
-		elem->plateau[elem->X] = 0;
-		while (i < elem->X)
+		elem->plateau[elem->x] = 0;
+		while (i < elem->x)
 		{
-			if(!(elem->plateau[i] = (char *)malloc(sizeof(char) * (elem->Y + 1))))
+			if (!(elem->plateau[i] = (char *)malloc(sizeof(char)
+							* (elem->y + 1))))
 				return (0);
-			elem->plateau[i][elem->Y] = '\0';
+			elem->plateau[i][elem->y] = '\0';
 			i++;
 		}
-		
 	}
-		return (0);
+	return (0);
 }
 
 void		ft_fill_plateau(t_parsing *elem, char *line)
 {
 	int i;
 	int j;
-	int fdtty4;
 
-	fdtty4 = open("/dev/ttys004", O_WRONLY);
-
-	if (line[0] == '0')
+	if (line[0] == '0' && elem->x > 0 && elem->y > 0)
 	{
 		i = 0;
 		j = 4;
@@ -146,45 +51,39 @@ void		ft_fill_plateau(t_parsing *elem, char *line)
 			j++;
 			i++;
 		}
-		dprintf(fdtty4, "%s\n", elem->plateau[elem->i]);
 		elem->i++;
 	}
 }
 
-
-int		ft_malloc_piece(t_parsing *elem, char *line)
+int			ft_malloc_piece(t_parsing *elem)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	if (elem->piece == NULL && elem->pX > 0 && elem->pY > 0)
+	if (elem->piece == NULL && elem->px > 0 && elem->py > 0)
 	{
-		if (!(elem->piece = (char **)malloc(sizeof(char *) * (elem->pX + 1))))
+		if (!(elem->piece = (char **)malloc(sizeof(char *) * (elem->px + 1))))
 			return (0);
-		elem->piece[elem->pX] = 0;
-		while (i < elem->pX)
+		elem->piece[elem->px] = 0;
+		while (i < elem->px)
 		{
-			if(!(elem->piece[i] = (char *)malloc(sizeof(char) * (elem->pY + 1))))
+			if (!(elem->piece[i] = (char *)malloc(sizeof(char)
+							* (elem->py + 1))))
 				return (0);
-			elem->piece[i][elem->pY] = '\0';
+			elem->piece[i][elem->py] = '\0';
 			i++;
-		}	
+		}
 	}
 	return (0);
 }
 
-
 void		ft_fill_piece(t_parsing *elem, char *line)
 {
 	int i;
-	int j;
-	int fdtty4;
 
-	fdtty4 = open("/dev/ttys004", O_WRONLY);
-
-	if (line[0] == '.' || line[0] == '*')
+	if ((line[0] == '.' || line[0] == '*') && (elem->px > 0 && elem->py > 0))
 	{
 		i = 0;
 		while (line[i] != '\0')
@@ -193,36 +92,32 @@ void		ft_fill_piece(t_parsing *elem, char *line)
 			i++;
 		}
 		elem->j++;
-	//	dprintf(fdtty4, "%sj--->%d\n", elem->piece[elem->j - 1], elem->j);
 	}
 }
 
 int			main(void)
 {
-	char	*line;
-	int		ret;
-	int		end;
-	t_parsing *elem;
+	char		*line;
+	t_parsing	*elem;
 	t_find		*find;
-	int fdtty4;
-
-	
-	fdtty4 = open("/dev/ttys004", O_WRONLY);
-	end = 1;
+//	fdtty4 = open("/dev/ttys004", O_WRONLY);
 	elem = ft_struct_init();
 	find = ft_find_struct_init();
 	while (1)
 	{
 		get_next_line(0, &line);
 		ft_parsing(elem, line);
-		ft_malloc_plateau(elem, line);
-		ft_malloc_piece(elem, line);
+		ft_malloc_plateau(elem);
+		ft_malloc_piece(elem);
 		ft_fill_plateau(elem, line);
 		ft_fill_piece(elem, line);
-		if (elem->j == elem->pX)
+		if (elem->j == elem->px)
 		{
-			end = ft_check_zone(elem, find);
-		//	sleep(3);
+			ft_check_zone(elem, find);
+			ft_free_tab(elem->plateau);
+			ft_free_tab(elem->piece);
+			ft_reset(elem, find);
 		}
+		ft_strdel(&line);
 	}
 }

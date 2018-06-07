@@ -6,7 +6,7 @@
 /*   By: cholm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 16:31:54 by cholm             #+#    #+#             */
-/*   Updated: 2018/05/23 21:00:54 by cholm            ###   ########.fr       */
+/*   Updated: 2018/06/06 19:08:24 by cholm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,6 @@ char				*ft_itoa_base_lower(unsigned long long int nbr,
 	unsigned long long int base);
 float				ft_sqrt(float nbr);
 int					ft_pow(int nbr);
+void				ft_free_tab(char **tab);
+
 #endif

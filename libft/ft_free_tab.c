@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cholm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/16 18:13:33 by cholm             #+#    #+#             */
-/*   Updated: 2018/06/06 19:08:02 by cholm            ###   ########.fr       */
+/*   Created: 2018/01/24 19:48:48 by cholm             #+#    #+#             */
+/*   Updated: 2018/06/04 17:00:49 by cholm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include "libft.h"
-# include <limits.h>
-
-# define BUFF_SIZE 60
-
-typedef struct	s_vars
+void	ft_free_tab(char **tab)
 {
-	int		i;
-	int		end;
-	int		read_val;
-	char	readbuf[BUFF_SIZE + 1];
-}				t_vars;
+	int i;
 
-int				get_next_line(const int fd, char **line);
-
-#endif
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
