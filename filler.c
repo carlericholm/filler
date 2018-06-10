@@ -100,10 +100,10 @@ int			main(void)
 	char		*line;
 	t_parsing	*elem;
 	t_find		*find;
-//	fdtty4 = open("/dev/ttys004", O_WRONLY);
+	fdtty4 = open("/dev/ttys004", O_WRONLY);
 	elem = ft_struct_init();
 	find = ft_find_struct_init();
-	while (1)
+	while (elem->check == 1)
 	{
 		get_next_line(0, &line);
 		ft_parsing(elem, line);
@@ -120,4 +120,7 @@ int			main(void)
 		}
 		ft_strdel(&line);
 	}
+	free(elem);
+	free(find);
+return (0);
 }

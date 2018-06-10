@@ -17,6 +17,7 @@ t_parsing		*ft_struct_init(void)
 	t_parsing	*elem;
 
 	elem = (t_parsing *)malloc(sizeof(t_parsing));
+	elem->check = 1;
 	elem->i = 0;
 	elem->j = 0;
 	elem->player = 0;
@@ -41,10 +42,13 @@ t_find			*ft_find_struct_init(void)
 	find->coordx = 0;
 	find->coordy = 0;
 	find->distance = 200;
+	find->dist = 200;
 	find->first = 0;
 	find->put_piece = 0;
 	find->cutx = 0;
 	find->cuty = 0;
+	find->centre = 0;
+	find->stop_left = 0;
 	return (find);
 }
 
@@ -82,7 +86,7 @@ void			ft_parsing(t_parsing *elem, char *line)
 
 	i = 0;
 	if (!line[0])
-		exit(1);
+		elem->check = 0;
 	if (line[0] == '$')
 	{
 		elem->player = ft_atoi(&line[10]);
@@ -117,6 +121,7 @@ void			ft_reset(t_parsing *elem, t_find *find)
 	find->x = 0;
 	find->y = 0;
 	find->distance = 200;
+	find->dist = 200;
 	find->coordx = 0;
 	find->coordy = 0;
 	find->cutx = 0;

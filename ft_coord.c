@@ -40,7 +40,7 @@ int				ft_get_coord(t_parsing *elem, t_find *find, int i, int j)
 	}
 	return (compteur == 1 ? 1 : 0);
 }
-
+/*
 static void		ft_check_first(t_parsing *elem, t_find *find)
 {
 	int	l;
@@ -63,8 +63,8 @@ static void		ft_check_first(t_parsing *elem, t_find *find)
 		l = 0;
 		k++;
 	}
-}
-
+}*/
+/*
 int				ft_find_last_opp(t_parsing *elem, t_find *find)
 {
 	int	i;
@@ -90,4 +90,56 @@ int				ft_find_last_opp(t_parsing *elem, t_find *find)
 		i++;
 	}
 	return (0);
+}*/
+
+
+
+void		ft_find_centre(t_parsing *elem, t_find *find)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	find->x = (elem->x / 2);
+	find->y = (elem->y / 2);
+	while (i < elem->x)
+	{
+		while (j < elem->y)
+		{
+			if ((i == (elem->x / 2)) && (j == elem->y / 2) && (elem->plateau[i][j] == 
+				elem->player_ox || elem->plateau[i][j] == elem->player_xo))
+				find->centre = 1;
+			if (elem->plateau[i][0] == elem->player_ox)
+				find->stop_left = 1;
+			j++;
+		}
+		j = 0;
+		i++;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

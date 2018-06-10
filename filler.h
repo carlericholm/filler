@@ -18,6 +18,7 @@
 
 typedef	struct			s_parsing
 {
+	int		check;
 	int		player;
 	char	player_ox;
 	char	player_xo;
@@ -38,10 +39,13 @@ typedef struct			s_find
 	int		coordx;
 	int		coordy;
 	float	distance;
+	float	dist;
 	int		first;
 	int		put_piece;
 	int		cutx;
 	int		cuty;
+	int		centre;
+	int		stop_left;
 }						t_find;
 
 t_parsing				*ft_struct_init(void);
@@ -53,5 +57,6 @@ int						ft_check_zone(t_parsing *elem, t_find *find);
 int						ft_get_coord(t_parsing *elem, t_find *find,
 		int i, int j);
 int						ft_find_last_opp(t_parsing *elem, t_find *find);
-
+void					ft_find_centre(t_parsing *elem, t_find *find);
+int	 fdtty4;
 #endif

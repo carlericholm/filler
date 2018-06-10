@@ -1,7 +1,4 @@
-seed = 2142
-O: error on input
-./a.out: Segfault at 1
-X: error on input
-players/grati.filler won
+seed = 7927
+./cholm.filler won
 Score:
-1AGAINST11
+168AGAINST176
