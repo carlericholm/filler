@@ -6,7 +6,7 @@
 /*   By: cholm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 10:51:02 by cholm             #+#    #+#             */
-/*   Updated: 2018/06/06 21:12:29 by cholm            ###   ########.fr       */
+/*   Updated: 2018/06/10 18:51:24 by cholm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,5 @@ int						ft_get_coord(t_parsing *elem, t_find *find,
 		int i, int j);
 int						ft_find_last_opp(t_parsing *elem, t_find *find);
 void					ft_find_centre(t_parsing *elem, t_find *find);
-int	 fdtty4;
+int						ft_malloc_piece(t_parsing *elem);
 #endif

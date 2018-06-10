@@ -6,13 +6,13 @@
 /*   By: cholm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 20:37:34 by cholm             #+#    #+#             */
-/*   Updated: 2018/06/06 20:56:27 by cholm            ###   ########.fr       */
+/*   Updated: 2018/06/10 18:29:19 by cholm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int				ft_get_coord(t_parsing *elem, t_find *find, int i, int j)
+int			ft_get_coord(t_parsing *elem, t_find *find, int i, int j)
 {
 	int	k;
 	int	l;
@@ -40,59 +40,6 @@ int				ft_get_coord(t_parsing *elem, t_find *find, int i, int j)
 	}
 	return (compteur == 1 ? 1 : 0);
 }
-/*
-static void		ft_check_first(t_parsing *elem, t_find *find)
-{
-	int	l;
-	int	k;
-
-	l = 0;
-	k = 0;
-	while (elem->plateau[k])
-	{
-		while (elem->plateau[k][l])
-		{
-			if ((elem->plateau[k][0] == elem->player_ox
-						|| elem->plateau[k][elem->y - 1]
-						== elem->player_ox
-						|| elem->plateau[0][l] == elem->player_ox
-						|| elem->plateau[elem->x - 1][l] == elem->player_ox))
-				find->first = 1;
-			l++;
-		}
-		l = 0;
-		k++;
-	}
-}*/
-/*
-int				ft_find_last_opp(t_parsing *elem, t_find *find)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	ft_check_first(elem, find);
-	while (i < elem->x)
-	{
-		while (j < elem->y)
-		{
-			if (elem->plateau[i][j] == elem->player_xo)
-			{
-				find->x = i;
-				find->y = j;
-				if (find->first == 0)
-					return (0);
-			}
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-	return (0);
-}*/
-
-
 
 void		ft_find_centre(t_parsing *elem, t_find *find)
 {
@@ -107,8 +54,9 @@ void		ft_find_centre(t_parsing *elem, t_find *find)
 	{
 		while (j < elem->y)
 		{
-			if ((i == (elem->x / 2)) && (j == elem->y / 2) && (elem->plateau[i][j] == 
-				elem->player_ox || elem->plateau[i][j] == elem->player_xo))
+			if ((i == (elem->x / 2)) && (j == elem->y / 2)
+					&& (elem->plateau[i][j] == elem->player_ox
+					|| elem->plateau[i][j] == elem->player_xo))
 				find->centre = 1;
 			if (elem->plateau[i][0] == elem->player_ox)
 				find->stop_left = 1;
@@ -118,28 +66,3 @@ void		ft_find_centre(t_parsing *elem, t_find *find)
 		i++;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -6,7 +6,7 @@
 /*   By: cholm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 09:44:21 by cholm             #+#    #+#             */
-/*   Updated: 2018/06/06 21:32:32 by cholm            ###   ########.fr       */
+/*   Updated: 2018/06/10 18:52:03 by cholm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int			ft_malloc_plateau(t_parsing *elem)
 			i++;
 		}
 	}
+	ft_malloc_piece(elem);
 	return (0);
 }
 
@@ -45,13 +46,16 @@ void		ft_fill_plateau(t_parsing *elem, char *line)
 	{
 		i = 0;
 		j = 4;
-		while (line[j] != '\0')
+		if (elem->plateau[elem->i])
 		{
-			elem->plateau[elem->i][i] = line[j];
-			j++;
-			i++;
+			while (i < elem->y)
+			{
+				elem->plateau[elem->i][i] = line[j];
+				j++;
+				i++;
+			}
+			elem->i++;
 		}
-		elem->i++;
 	}
 }
 
@@ -86,12 +90,15 @@ void		ft_fill_piece(t_parsing *elem, char *line)
 	if ((line[0] == '.' || line[0] == '*') && (elem->px > 0 && elem->py > 0))
 	{
 		i = 0;
-		while (line[i] != '\0')
+		if (elem->piece[elem->j])
 		{
-			elem->piece[elem->j][i] = line[i];
-			i++;
+			while (i < elem->py)
+			{
+				elem->piece[elem->j][i] = line[i];
+				i++;
+			}
+			elem->j++;
 		}
-		elem->j++;
 	}
 }
 
@@ -100,7 +107,7 @@ int			main(void)
 	char		*line;
 	t_parsing	*elem;
 	t_find		*find;
-	fdtty4 = open("/dev/ttys004", O_WRONLY);
+
 	elem = ft_struct_init();
 	find = ft_find_struct_init();
 	while (elem->check == 1)
@@ -108,10 +115,9 @@ int			main(void)
 		get_next_line(0, &line);
 		ft_parsing(elem, line);
 		ft_malloc_plateau(elem);
-		ft_malloc_piece(elem);
 		ft_fill_plateau(elem, line);
 		ft_fill_piece(elem, line);
-		if (elem->j == elem->px)
+		if (elem->j == elem->px && elem->x > 0)
 		{
 			ft_check_zone(elem, find);
 			ft_free_tab(elem->plateau);
@@ -122,5 +128,5 @@ int			main(void)
 	}
 	free(elem);
 	free(find);
-return (0);
+	return (0);
 }

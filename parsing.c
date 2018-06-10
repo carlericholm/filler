@@ -6,7 +6,7 @@
 /*   By: cholm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 21:04:37 by cholm             #+#    #+#             */
-/*   Updated: 2018/06/06 21:18:01 by cholm            ###   ########.fr       */
+/*   Updated: 2018/06/10 18:46:48 by cholm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_find			*ft_find_struct_init(void)
 	find->first = 0;
 	find->put_piece = 0;
 	find->cutx = 0;
-	find->cuty = 0;
+	find->cuty = 200;
 	find->centre = 0;
 	find->stop_left = 0;
 	return (find);
